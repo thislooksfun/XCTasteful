@@ -22,7 +22,7 @@ But why describe it when I can show it?
 **Disclaimer 2**: XCTasteful currently only works with swift, as it directly calls `swift test`. If enough people want Obj-C support I can try to figure that out.
 
 ## To install:
-1. [Download XCTasteful.js](https://raw.githubusercontent.com/thislooksfun/XCTasteful/master/xctasteful.js)
+1. [Download XCTasteful](https://raw.githubusercontent.com/thislooksfun/XCTasteful/master/XCTasteful)
 2. `cd` to your swift project (only works with swift for now)
 3. Run the file (you may need to run `chmod +x` on it first)
 4. Enjoy your legible XCTest output!
@@ -33,8 +33,8 @@ But why describe it when I can show it?
 - [ ] Add more reporter types:
     - [x] Spec
     - [x] Dot matrix
-    - [ ] [TAP](http://testanything.org/)
-    - [ ] List
+    - [x] [TAP](http://testanything.org/)
+    - [x] List
     - [ ] JSON
     - [ ] JSON Stream?
     - [ ] Min?
