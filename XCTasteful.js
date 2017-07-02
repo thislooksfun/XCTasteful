@@ -9,13 +9,28 @@ var a1 = process.argv[2]
 var a2 = process.argv[3]
 var useReporter = 'spec'
 var listReporters = false
-if (a1 === '--xct-version') {
+var showHelp = false
+if (a1 === '--xct-help') {
+  showHelp = true
+} else if (a1 === '--xct-version') {
   print('XCTasteful version 0.1.0')
   process.exit(0)
 } else if (a1 === '--xct-reporter') {
   useReporter = a2
 } else if (a1 === '--xct-list-reporters') {
   listReporters = true
+} else if (a1 !== undefined) {
+  // Invalid argument
+  showHelp = true
+}
+
+if (showHelp) {
+  print('XCTasteful help')
+  print('  --xct-help                   view this help')
+  print('  --xct-version                display the XCTasteful version')
+  print('  --xct-reporter [reporter]    select a reporter to use')
+  print('  --xct-list-reporters         list all available reporters')
+  process.exit(0)
 }
 
 
@@ -304,6 +319,13 @@ if (listReporters) {
   process.exit(0)
 }
 
+if (useReporter === undefined) {
+  print(red)
+  print('  You must specify a reporter to use.')
+  print('  Use --xct-help for more info')
+  print(reset)
+  process.exit(1)
+}
 reporter = reporters[useReporter]
 if (reporter === undefined) {
   print()
