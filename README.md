@@ -31,12 +31,12 @@ But why describe it when I can show it?
 ## Roadmap for XCTasteful:
 - [ ] Create `swift-test` shim for automated support
 - [ ] Add more reporter types:
-      - [x] Spec
-      - [x] Dot matrix
-      - [ ] [TAP](http://testanything.org/)
-      - [ ] List
-      - [ ] JSON
-      - [ ] JSON Stream?
-      - [ ] Min?
+    - [x] Spec
+    - [x] Dot matrix
+    - [ ] [TAP](http://testanything.org/)
+    - [ ] List
+    - [ ] JSON
+    - [ ] JSON Stream?
+    - [ ] Min?
 - [ ] Debugging!
 - [ ] Obj-C support?
