@@ -9,7 +9,7 @@ I don't know about anyone else, but I think the default XCTest output is ugly an
 ## To install:
 1. [Download XCTasteful.js](https://raw.githubusercontent.com/thislooksfun/XCTasteful/master/xctasteful.js)
 2. `cd` to your swift project (only works with `swift test` for now)
-3. Run the file (you may need to `chmod` it first)
+3. Run the file (you may need to run `chmod +x` on it first)
 4. Enjoy your legible `swift test` output!
 
 
