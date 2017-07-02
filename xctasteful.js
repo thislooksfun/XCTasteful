@@ -163,8 +163,6 @@ var reporters = {
           print(red + ' ' + err.type + ' failed: ' + err.msg + ' '+gray+'(' + err.file + '.swift:' + err.line + ')' + reset)
         }
       }
-      
-      cleanup()
     },
   },
   dots: {
@@ -206,8 +204,6 @@ var reporters = {
           print(red + ' ' + err.type + ' failed: ' + err.msg + ' '+gray+'(' + err.file + '.swift:' + err.line + ')' + reset)
         }
       }
-      
-      cleanup()
     },
   },
 }
@@ -274,11 +270,14 @@ function stopSpinner() {
   clearInterval(spinnerID)
 }
 
-function cleanup(code) { print(reset + showCursor); stopSpinner() }
+// This *does not* need to be called manually
+function cleanup() {
+  print(reset + showCursor);
+  stopSpinner();
+}
 
 process.on('exit', cleanup)
 process.on('SIGINT', cleanup)
-process.on('uncaughtException', cleanup)
 
 reporter.prep()
 
@@ -287,4 +286,7 @@ var spawn = require('child_process').spawn,
     st    = spawn('swift', ['test']);
 st.stdout.on('data', handleData);
 st.stderr.on('data', handleData);
-st.on('exit', reporter.summarize);
+st.on('exit', function() {
+  reporter.summarize()
+  process.exit(failCount)
+});
