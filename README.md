@@ -14,6 +14,6 @@ I don't know about anyone else, but I think the default XCTest output is ugly an
 
 
 ## Roadmap for XCTasteful:
-[ ] Create `swift-test` shim for automated support
-[ ] Add more reporter types
-[ ] Debugging!
+- [ ] Create `swift-test` shim for automated support
+- [ ] Add more reporter types
+- [ ] Debugging!
