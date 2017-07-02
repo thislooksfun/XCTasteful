@@ -286,7 +286,14 @@ var spawn = require('child_process').spawn,
     st    = spawn('swift', ['test']);
 st.stdout.on('data', handleData);
 st.stderr.on('data', handleData);
-st.on('exit', function() {
+st.on('exit', function(code) {
   reporter.summarize()
+  if ((code === 0 && failCount !== 0) || (code !== 0 && failCount === 0)) {
+    write(red)
+    print('\n\nError code mismatch. `swift test` exited with code ' + code + ', but `failCount` is ' + failCount)
+    print('If you see this error, please create a new issue at https://github.com/thislooksfun/XCTasteful\n\n')
+    write(reset)
+    process.exit(1)
+  }
   process.exit(failCount)
 });
