@@ -167,6 +167,49 @@ var reporters = {
       cleanup()
     },
   },
+  dots: {
+    prep: function() {
+      print(hideCursor)
+      write(cyan + spinnerStopped + white + ' Initializing' + reset + '\r')
+      startSpinner()
+    },
+    logPreInit: function(msg) {},
+    suiteStart: function() {},
+    caseStart: function() {},
+    caseDone: function(status) {
+      testCount++
+      if (!status) {
+        failCount++
+        wereErrors = false
+      }
+      write(status ? gray : red)
+      write('.')
+      write(reset)
+    },
+    summarize: function() {
+      write('\n\n  ')
+      if (failCount == 0) {
+        var time = '' //TODO: Implement this
+        print(green + passPrefix + ' ' + testCount + ' tests completed (' + time + ')')
+      } else {
+        print(red + failPrefix + ' ' + failCount + ' of ' + testCount + ' tests failed' + gray + ':')
+      }
+      print(reset)
+      
+      for (var i = 0; i < errors.length; i++) {
+        write('  ' + white + (i+1) + ')' + reset)
+        for (var j = 0; j < errors[i].length; j++) {
+          if (j != 0) {
+            write('    ')
+          }
+          err = errors[i][j]
+          print(red + ' ' + err.type + ' failed: ' + err.msg + ' '+gray+'(' + err.file + '.swift:' + err.line + ')' + reset)
+        }
+      }
+      
+      cleanup()
+    },
+  },
 }
 
 var reporter = reporters.spec
