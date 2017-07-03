@@ -10,15 +10,15 @@ XCTasteful aims to change that. It draws on the popular 'spec' formatting to mak
 But why describe what I can show?
 
 ### Passing tests:
-![XCTest Passing Tests](http://i.imgur.com/9Zyf25I.png)
+![XCTest Passing Tests](http://i.imgur.com/Kpf25UT.png)
 
-![XCTasteful Passing Tests](http://i.imgur.com/gAu12HU.png)
+![XCTasteful Passing Tests](http://i.imgur.com/yAFSIcX.png)
 
 
 ### Failing tests:
-![XCTest Failing Tests](http://i.imgur.com/oApbbJH.png)
+![XCTest Failing Tests](http://i.imgur.com/SlMKg9P.png)
 
-![XCTasteful Failing Tests](http://i.imgur.com/amsSIrN.png)
+![XCTasteful Failing Tests](http://i.imgur.com/OH5YEk6.png)
 
 
 **Disclaimer 1**: XCTasteful is still decently early in development, so any feedback/ideas would be more than welcome.
