@@ -13,7 +13,7 @@ var showHelp = false
 if (a1 === '--help') {
   showHelp = true
 } else if (a1 === '--version') {
-  print('XCTasteful version 0.1.0')
+  print('XCTasteful version 1.0.0')
   process.exit(0)
 } else if (a1 === '--reporter') {
   useReporter = a2
