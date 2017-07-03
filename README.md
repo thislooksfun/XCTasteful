@@ -7,15 +7,18 @@ Don't get me wrong, it's a very useful format jam-packed with information; but t
 
 XCTasteful aims to change that. It draws on the popular 'spec' formatting to make your XCTests clean and simple to understand at a glance.
 
-But why describe it when I can show it?
+But why describe what I can show?
 
 ### Passing tests:
-![XCTest Passing Tests](http://i.imgur.com/wfvD7U9.png)
-![XCTasteful Passing Tests](http://i.imgur.com/opIGTUZ.png)
+![XCTest Passing Tests](http://i.imgur.com/9Zyf25I.png)
+
+![XCTasteful Passing Tests](http://i.imgur.com/gAu12HU.png)
+
 
 ### Failing tests:
-![XCTest Failing Tests](http://i.imgur.com/BzxEbq6.png)
-![XCTasteful Failing Tests](http://i.imgur.com/IwDOvwr.png)
+![XCTest Failing Tests](http://i.imgur.com/oApbbJH.png)
+
+![XCTasteful Failing Tests](http://i.imgur.com/amsSIrN.png)
 
 
 **Disclaimer 1**: XCTasteful is still decently early in development, so any feedback/ideas would be more than welcome.
