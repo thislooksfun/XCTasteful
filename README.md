@@ -21,15 +21,14 @@ But why describe it when I can show it?
 **Disclaimer 1**: XCTasteful is still decently early in development, so any feedback/ideas would be more than welcome.
 **Disclaimer 2**: XCTasteful currently only works with swift, as it directly calls `swift test`. If enough people want Obj-C support I can try to figure that out.
 
-## To install:
-1. [Download XCTasteful](https://raw.githubusercontent.com/thislooksfun/XCTasteful/master/XCTasteful)
-2. `cd` to your swift project (only works with swift for now)
-3. Run the file (you may need to run `chmod +x` on it first)
+## Installation:
+1. Download and run the [install script](https://raw.githubusercontent.com/thislooksfun/XCTasteful/master/installer.sh)
+2. `cd` to your swift project (Obj-C is currently unsupported)
+3. Run `XCTasteful`
 4. Enjoy your legible XCTest output!
 
 
 ## Roadmap for XCTasteful:
-- [ ] Create `swift-test` shim for automated support
 - [ ] Add more reporter types:
     - [x] Spec
     - [x] Dot matrix
