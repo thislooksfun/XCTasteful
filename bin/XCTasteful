@@ -25,7 +25,11 @@ if (a1 === '--help') {
 }
 
 if (showHelp) {
-  print('XCTasteful help')
+  print('OVERVIEW: XCTasteful')
+  print()
+  print('USAGE: XCTasteful [option]')
+  print()
+  print('OPTIONS:')
   print('  --help                   view this help')
   print('  --version                display the XCTasteful version')
   print('  --reporter [reporter]    select a reporter to use')
