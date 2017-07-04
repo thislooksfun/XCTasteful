@@ -5,35 +5,40 @@
 // Parse input options:
 // var a1 = process.args[1]
 // console.log(a1)
-var a1 = process.argv[2]
-var a2 = process.argv[3]
 var useReporter = 'spec'
 var listReporters = false
 var showHelp = false
-if (a1 === '--help') {
-  showHelp = true
-} else if (a1 === '--version') {
-  print('XCTasteful version 1.0.0')
-  process.exit(0)
-} else if (a1 === '--reporter') {
-  useReporter = a2
-} else if (a1 === '--list-reporters') {
-  listReporters = true
-} else if (a1 !== undefined) {
-  // Invalid argument
-  showHelp = true
+var animations = true
+for (var ai = 2; ai < process.argv.length; ai++) {
+  var arg = process.argv[ai]
+  if (arg === '--help') {
+    showHelp = true
+  } else if (arg === '--version') {
+    print('XCTasteful version 1.0.1')
+    process.exit(0)
+  } else if (arg === '--reporter') {
+    useReporter = process.argv[++ai]
+  } else if (arg === '--list-reporters') {
+    listReporters = true
+  } else if (arg !== undefined) {
+    // Invalid argument
+    showHelp = true
+  } else if (arg === '--no-animation') {
+    animations = false
+  }
 }
 
 if (showHelp) {
   print('OVERVIEW: XCTasteful')
   print()
-  print('USAGE: XCTasteful [option]')
+  print('USAGE: XCTasteful [options]')
   print()
   print('OPTIONS:')
   print('  --help                   view this help')
   print('  --version                display the XCTasteful version')
   print('  --reporter [reporter]    select a reporter to use')
   print('  --list-reporters         list all available reporters')
+  print('  --no-animation           disable animations - meant for CI use')
   process.exit(0)
 }
 
@@ -418,7 +423,9 @@ function advanceSpinner() {
 }
 
 function startSpinner() {
-  spinnerID = setInterval(advanceSpinner, 100)
+  if (animations) {
+    spinnerID = setInterval(advanceSpinner, 100)
+  }
 }
 
 function stopSpinner() {
