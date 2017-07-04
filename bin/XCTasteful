@@ -15,7 +15,7 @@ for (var ai = 2; ai < process.argv.length; ai++) {
   if (arg === '--help') {
     showHelp = true
   } else if (arg === '--version') {
-    print('XCTasteful version 1.0.2')
+    print('XCTasteful version 1.1.0')
     process.exit(0)
   } else if (arg === '--reporter') {
     useReporter = process.argv[++ai]
@@ -57,10 +57,10 @@ var spinner = '⣷⣯⣟⡿⢿⣻⣽⣾'.split('')
 var spinnerID = null
 
 // regex
-var startRegex      = /^Test Suite 'All tests' started at (\d{4}-\d\d-\d\d \d\d:\d\d:\d\d.\d\d\d)$/
-var endRegex        = /^Test Suite 'All tests' (?:passed|failed) at (\d{4}-\d\d-\d\d \d\d:\d\d:\d\d.\d\d\d)\.$/
-var suiteStartRegex = /^Test Suite '([A-Z][a-zA-Z]*Tests)' started at \d{4}-\d\d-\d\d \d\d:\d\d:\d\d.\d\d\d$/
-var suiteEndRegex   = /^Test Suite '[A-Z][a-zA-Z]*Tests' (?:passed|failed) at \d{4}-\d\d-\d\d \d\d:\d\d:\d\d.\d\d\d\.$/
+var startRegex      = /^Test Suite 'All tests' started at ((?:\d{4}-\d\d-\d\d )?\d\d:\d\d:\d\d.\d\d\d)$/
+var endRegex        = /^Test Suite 'All tests' (?:passed|failed) at ((?:\d{4}-\d\d-\d\d )?\d\d:\d\d:\d\d.\d\d\d)\.$/
+var suiteStartRegex = /^Test Suite '([A-Z][a-zA-Z]*Tests)' started at (?:\d{4}-\d\d-\d\d )?\d\d:\d\d:\d\d.\d\d\d$/
+var suiteEndRegex   = /^Test Suite '[A-Z][a-zA-Z]*Tests' (?:passed|failed) at (?:\d{4}-\d\d-\d\d )?\d\d:\d\d:\d\d.\d\d\d\.$/
 var caseStartRegex  = /^Test Case '-\[[A-Z][a-zA-Z]*\.[A-Z][a-zA-Z]* (test[A-Z][a-zA-Z]*)\]' started\.$/
 var caseEndRegex    = /^Test Case '-\[[A-Z][a-zA-Z]*\.[A-Z][a-zA-Z]* test[A-Z][a-zA-Z]*\]' (passed|failed) \((\d+\.\d\d\d) seconds\)\.$/
 var errorRegex      = /^(?:\/[a-zA-Z0-9](?:[a-zA-Z0-9]|\\ )*)*\/([a-zA-Z0-9]*)\.swift:(\d+): error: -\[[A-Z][a-zA-Z]*\.[A-Z][a-zA-Z]* test[A-Z][a-zA-Z]*\] : ?(XCTAssert[A-Za-z]*)? failed:? (.*)$/
