@@ -15,7 +15,7 @@ for (var ai = 2; ai < process.argv.length; ai++) {
   if (arg === '--help') {
     showHelp = true
   } else if (arg === '--version') {
-    print('XCTasteful version 1.1.0')
+    print('XCTasteful version 1.1.1')
     process.exit(0)
   } else if (arg === '--reporter') {
     useReporter = process.argv[++ai]
@@ -57,13 +57,26 @@ var spinner = '⣷⣯⣟⡿⢿⣻⣽⣾'.split('')
 var spinnerID = null
 
 // regex
-var startRegex      = /^Test Suite 'All tests' started at ((?:\d{4}-\d\d-\d\d )?\d\d:\d\d:\d\d.\d\d\d)$/
-var endRegex        = /^Test Suite 'All tests' (?:passed|failed) at ((?:\d{4}-\d\d-\d\d )?\d\d:\d\d:\d\d.\d\d\d)\.$/
-var suiteStartRegex = /^Test Suite '([A-Z][a-zA-Z]*Tests)' started at (?:\d{4}-\d\d-\d\d )?\d\d:\d\d:\d\d.\d\d\d$/
-var suiteEndRegex   = /^Test Suite '[A-Z][a-zA-Z]*Tests' (?:passed|failed) at (?:\d{4}-\d\d-\d\d )?\d\d:\d\d:\d\d.\d\d\d\.$/
-var caseStartRegex  = /^Test Case '-\[[A-Z][a-zA-Z]*\.[A-Z][a-zA-Z]* (test[A-Z][a-zA-Z]*)\]' started\.$/
-var caseEndRegex    = /^Test Case '-\[[A-Z][a-zA-Z]*\.[A-Z][a-zA-Z]* test[A-Z][a-zA-Z]*\]' (passed|failed) \((\d+\.\d\d\d) seconds\)\.$/
-var errorRegex      = /^(?:\/[a-zA-Z0-9](?:[a-zA-Z0-9]|\\ )*)*\/([a-zA-Z0-9]*)\.swift:(\d+): error: -\[[A-Z][a-zA-Z]*\.[A-Z][a-zA-Z]* test[A-Z][a-zA-Z]*\] : ?(XCTAssert[A-Za-z]*)? failed:? (.*)$/
+var macRegex = {
+  start:      /^Test Suite 'All tests' started at (\d{4}-\d\d-\d\d \d\d:\d\d:\d\d.\d\d\d)\.?$/,
+  end:        /^Test Suite 'All tests' (?:passed|failed) at (\d{4}-\d\d-\d\d \d\d:\d\d:\d\d.\d\d\d)\.?$/,
+  suiteStart: /^Test Suite '([A-Z][a-zA-Z]*Tests)' started at \d{4}-\d\d-\d\d \d\d:\d\d:\d\d.\d\d\d\.?$/,
+  suiteEnd:   /^Test Suite '[A-Z][a-zA-Z]*Tests' (?:passed|failed) at \d{4}-\d\d-\d\d \d\d:\d\d:\d\d.\d\d\d\.?$/,
+  caseStart:  /^Test Case '-\[[A-Z][a-zA-Z]*\.[A-Z][a-zA-Z]* (test[A-Z][a-zA-Z]*)\]' started\.?$/,
+  caseEnd:    /^Test Case '-\[[A-Z][a-zA-Z]*\.[A-Z][a-zA-Z]* test[A-Z][a-zA-Z]*\]' (passed|failed) \((\d+\.\d\d?\d?) seconds\)\.?$/,
+  error:      /^(?:\/[a-zA-Z0-9](?:[a-zA-Z0-9]|\\ )*)*\/([a-zA-Z0-9]*)\.swift:(\d+): error: -\[[A-Z][a-zA-Z]*\.[A-Z][a-zA-Z]* test[A-Z][a-zA-Z]*\] : ?(XCTAssert[A-Za-z]*)? failed:? (.*)\.?$/,
+}
+
+var linuxRegex = {
+  start:      /^Test Suite 'All tests' started at (\d\d:\d\d:\d\d.\d\d\d)\.?$/,
+  end:        /^Test Suite 'All tests' (?:passed|failed) at (\d\d:\d\d:\d\d.\d\d\d)\.?$/,
+  suiteStart: /^Test Suite '([A-Z][a-zA-Z]*Tests)' started at \d\d:\d\d:\d\d.\d\d\d\.?$/,
+  suiteEnd:   /^Test Suite '[A-Z][a-zA-Z]*Tests' (?:passed|failed) at (?:\d{4}-\d\d-\d\d )?\d\d:\d\d:\d\d.\d\d\d\.?$/,
+  caseStart:  /^Test Case '[A-Z][a-zA-Z]*\.(test[A-Z][a-zA-Z]*)' started at \d\d:\d\d:\d\d.\d\d\d\.?$/,
+  caseEnd:    /^Test Case '[A-Z][a-zA-Z]*\.test[A-Z][a-zA-Z]*' (passed|failed) \((\d+\.\d\d?\d?) seconds\)\.?$/,
+  error:      /^(?:\/[a-zA-Z0-9](?:[a-zA-Z0-9]|\\ )*)*\/([a-zA-Z0-9]*)\.swift:(\d+): error: [A-Z][a-zA-Z]*.test[A-Z][a-zA-Z]* : ?(XCTAssert[A-Za-z]*)? failed:? (.*)\.?$/,
+}
+var regex = (process.platform === 'darwin' ? macRegex : linuxRegex)
 
 var XCTAssertRegexes = {
   XCTAssert:                     /^- (.*)$/,
@@ -365,7 +378,7 @@ function writeDuration(duration) {
 
 function parseLine(line) {
   var re = null
-  if (re = startRegex.exec(line)) {
+  if (re = regex.start.exec(line)) {
     startTime = new Date(re[1])
     if (spinnerID !== null) {
       stopSpinner()
@@ -376,18 +389,18 @@ function parseLine(line) {
     print('')
     names.push('All tests')
     reporter.suiteStart()
-  } else if (re = endRegex.exec(line)) {
+  } else if (re = regex.end.exec(line)) {
     endTime = new Date(re[1])
     names.pop()
-  } else if (re = suiteStartRegex.exec(line)) {
+  } else if (re = regex.suiteStart.exec(line)) {
     names.push(re[1])
     reporter.suiteStart()
-  } else if (re = suiteEndRegex.exec(line)) {
+  } else if (re = regex.suiteEnd.exec(line)) {
     names.pop()
-  } else if (re = caseStartRegex.exec(line)) {
+  } else if (re = regex.caseStart.exec(line)) {
     names.push(re[1])
     reporter.caseStart()
-  } else if (re = caseEndRegex.exec(line)) {
+  } else if (re = regex.caseEnd.exec(line)) {
     var passed = (re[1] === 'passed')
     var duration = parseInt(re[2].replace('.', ''))
     testCount++
@@ -397,7 +410,7 @@ function parseLine(line) {
     }
     reporter.caseDone(passed, duration)
     names.pop()
-  } else if (re = errorRegex.exec(line)) {
+  } else if (re = regex.error.exec(line)) {
     //TODO: Parse msg?
     var err = {file: re[1], line: re[2], type: re[3], msg: re[4]}
     if (wereErrors) {
