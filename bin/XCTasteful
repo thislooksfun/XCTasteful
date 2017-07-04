@@ -15,7 +15,7 @@ for (var ai = 2; ai < process.argv.length; ai++) {
   if (arg === '--help') {
     showHelp = true
   } else if (arg === '--version') {
-    print('XCTasteful version 1.0.1')
+    print('XCTasteful version 1.0.2')
     process.exit(0)
   } else if (arg === '--reporter') {
     useReporter = process.argv[++ai]
