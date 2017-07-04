@@ -31,6 +31,10 @@ But why describe what I can show?
 4. Enjoy your legible XCTest output!
 
 
+### Notes:
+* When running on CI it is advisable to set the `--no-animation` flag
+
+
 ## Roadmap for XCTasteful:
 - [ ] Add more reporter types:
     - [x] Spec
