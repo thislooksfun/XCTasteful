@@ -8,6 +8,7 @@
 var useReporter = 'spec'
 var listReporters = false
 var showHelp = false
+var invalidArgument = false
 var animations = true
 for (var ai = 2; ai < process.argv.length; ai++) {
   var arg = process.argv[ai]
@@ -20,11 +21,14 @@ for (var ai = 2; ai < process.argv.length; ai++) {
     useReporter = process.argv[++ai]
   } else if (arg === '--list-reporters') {
     listReporters = true
+  } else if (arg === '--no-animation') {
+    animations = false
   } else if (arg !== undefined) {
     // Invalid argument
     showHelp = true
-  } else if (arg === '--no-animation') {
-    animations = false
+    invalidArgument = true
+    print("ERROR: Invalid argument: " + arg)
+    break
   }
 }
 
@@ -39,7 +43,7 @@ if (showHelp) {
   print('  --reporter [reporter]    select a reporter to use')
   print('  --list-reporters         list all available reporters')
   print('  --no-animation           disable animations - meant for CI use')
-  process.exit(0)
+  process.exit(invalidArgument ? 1 : 0)
 }
 
 
