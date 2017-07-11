@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var version = '1.2.0'
+var version = '1.2.1'
 
 // See http://mochajs.org/#spec for design
 
@@ -497,7 +497,6 @@ var spawn = require('child_process').spawn,
 st.stdout.on('data', handleData);
 st.stderr.on('data', handleData);
 st.on('exit', function(code) {
-  reporter.summarize()
   var mismatchedCode = (code === 0 && failCount !== 0) || (code !== 0 && failCount === 0)
   if (wasCleanExit && mismatchedCode) {
     write(red)
@@ -506,12 +505,26 @@ st.on('exit', function(code) {
     write(reset)
     // Invalid state
     process.exit(2)
-  }
-  if (failCount > 0) {
-    // Failed test
-    process.exit(1)
+  } else if (!wasCleanExit) {
+    write(red)
+    print('\n\nERROR: \'swift test\' exited before finishing tests')
+    print('Running \'swift test\' manually might show more information')
+    write(gray)
+    print('Hint: XCTasteful exits with error code \'2\' when a state mismatch with \'swift test\' occurs.')
+    print('      If this is running on a CI server it might be a good idea to check for that exit code and')
+    print('      run \'swift test\' directly if it occurs.')
+    write(reset)
+    // Unknown error
+    process.exit(2)
   } else {
-    // Passed test
-    process.exit(0)
+    // Nothing went (super) wrong, continue onwards!
+    reporter.summarize()
+    if (failCount > 0) {
+      // Failed test
+      process.exit(1)
+    } else {
+      // Passed test
+      process.exit(0)
+    }
   }
 });
