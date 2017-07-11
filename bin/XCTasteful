@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var version = '1.2.2'
+var version = '1.2.3'
 
 // See http://mochajs.org/#spec for design
 
@@ -502,17 +502,15 @@ st.on('exit', function(code) {
     print('\n')
     print(red + 'Error code mismatch. `swift test` exited with code ' + code + ', but `failCount` is ' + failCount)
     print(red + 'If you see this error, please create a new issue at https://github.com/thislooksfun/XCTasteful\n\n')
+    printExitCode2Hint()
     write(reset)
     // Invalid state
     process.exit(2)
   } else if (!wasCleanExit) {
     print('\n')
-    print(red + 'ERROR: \'swift test\' exited before finishing tests')
-    print(red + 'Running \'swift test\' manually might show more information')
-    print()
-    print(gray + 'Hint: XCTasteful exits with error code \'2\' when a state mismatch with \'swift test\' occurs.')
-    print(gray + '      If this is running on a CI server it might be a good idea to check for that exit code and')
-    print(gray + '      run \'swift test\' directly if it occurs.')
+    print(red + 'ERROR: \'swift test\' exited before finishing tests with exit code \'' + white + code + red + '\'')
+    print(red + 'Running \'swift test\' directly might show more information')
+    printExitCode2Hint()
     write(reset)
     // Unknown error
     process.exit(2)
@@ -528,3 +526,12 @@ st.on('exit', function(code) {
     }
   }
 });
+
+
+function printExitCode2Hint() {
+  print()
+  print(gray + 'Hint:')
+  print(gray + '  XCTasteful exits with error code \'2\' when a state mismatch with \'swift test\'')
+  print(gray + '  or other unknown error occurs. If this is running on a CI server it is')
+  print(gray + '  recommended to check for that exit code and run \'swift test\' directly.')
+}
