@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var version = '1.2.1'
+var version = '1.2.2'
 
 // See http://mochajs.org/#spec for design
 
@@ -348,8 +348,8 @@ var reporters = {
 }
 
 if (listReporters) {
-  print(white)
-  print(' XCTasteful reporters:')
+  print()
+  print(white + ' XCTasteful reporters:')
   for (var n in reporters) {
     write(' ' + white + ' - ')
     
@@ -369,9 +369,8 @@ if (listReporters) {
 }
 
 if (useReporter === undefined) {
-  print(red)
-  print('  You must specify a reporter to use.')
-  print('  Use --xct-help for more info')
+  print(red + '  You must specify a reporter to use.')
+  print(red + '  Use --xct-help for more info')
   print(reset)
   process.exit(1)
 }
@@ -379,7 +378,7 @@ reporter = reporters[useReporter]
 if (reporter === undefined) {
   print()
   print(red + '\'' + gray + useReporter + red + '\' is not a valid reporter.')
-  print('Use --xct-list-reporters fot a list of supported reporters')
+  print(red + 'Use --xct-list-reporters fot a list of supported reporters')
   print(reset)
   process.exit(1)
 }
@@ -499,20 +498,18 @@ st.stderr.on('data', handleData);
 st.on('exit', function(code) {
   var mismatchedCode = (code === 0 && failCount !== 0) || (code !== 0 && failCount === 0)
   if (wasCleanExit && mismatchedCode) {
-    write(red)
-    print('\n\nError code mismatch. `swift test` exited with code ' + code + ', but `failCount` is ' + failCount)
-    print('If you see this error, please create a new issue at https://github.com/thislooksfun/XCTasteful\n\n')
+    print(red + '\n\nError code mismatch. `swift test` exited with code ' + code + ', but `failCount` is ' + failCount)
+    print(red + 'If you see this error, please create a new issue at https://github.com/thislooksfun/XCTasteful\n\n')
     write(reset)
     // Invalid state
     process.exit(2)
   } else if (!wasCleanExit) {
-    write(red)
-    print('\n\nERROR: \'swift test\' exited before finishing tests')
-    print('Running \'swift test\' manually might show more information')
-    write(gray)
-    print('Hint: XCTasteful exits with error code \'2\' when a state mismatch with \'swift test\' occurs.')
-    print('      If this is running on a CI server it might be a good idea to check for that exit code and')
-    print('      run \'swift test\' directly if it occurs.')
+    print(red + '\n\nERROR: \'swift test\' exited before finishing tests')
+    print(red + 'Running \'swift test\' manually might show more information')
+    print()
+    print(gray + 'Hint: XCTasteful exits with error code \'2\' when a state mismatch with \'swift test\' occurs.')
+    print(gray + '      If this is running on a CI server it might be a good idea to check for that exit code and')
+    print(gray + '      run \'swift test\' directly if it occurs.')
     write(reset)
     // Unknown error
     process.exit(2)
