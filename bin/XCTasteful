@@ -335,7 +335,8 @@ var reporters = {
     //TODO
     unimplemented: true,
     prep: function() {
-      print(red + '\nJSON reporter not yet implemented' + reset)
+      print()
+      print(red + 'JSON reporter not yet implemented' + reset)
       process.exit(1)
     },
     logPreInit: function(msg) {},
@@ -498,13 +499,15 @@ st.stderr.on('data', handleData);
 st.on('exit', function(code) {
   var mismatchedCode = (code === 0 && failCount !== 0) || (code !== 0 && failCount === 0)
   if (wasCleanExit && mismatchedCode) {
-    print(red + '\n\nError code mismatch. `swift test` exited with code ' + code + ', but `failCount` is ' + failCount)
+    print('\n')
+    print(red + 'Error code mismatch. `swift test` exited with code ' + code + ', but `failCount` is ' + failCount)
     print(red + 'If you see this error, please create a new issue at https://github.com/thislooksfun/XCTasteful\n\n')
     write(reset)
     // Invalid state
     process.exit(2)
   } else if (!wasCleanExit) {
-    print(red + '\n\nERROR: \'swift test\' exited before finishing tests')
+    print('\n')
+    print(red + 'ERROR: \'swift test\' exited before finishing tests')
     print(red + 'Running \'swift test\' manually might show more information')
     print()
     print(gray + 'Hint: XCTasteful exits with error code \'2\' when a state mismatch with \'swift test\' occurs.')
