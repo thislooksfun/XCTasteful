@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var version = '1.2.3'
+var version = '1.2.4'
 
 // See http://mochajs.org/#spec for design
 
@@ -123,18 +123,18 @@ var XCTAssertParsers = {
 // Ansi
 var esc = '\033['
 
-// Colors
-var green  = esc + '32m'   // dark green
-var red    = esc + '31m'   // dark red
-var yellow = esc + '33m'   // dark yellow
-var gray   = esc + '30;1m' // bright black (gray)
-var white  = esc + '37;1m' // bright white
-var cyan   = esc + '36m'   // dark cyan
-
 // Special
 var reset = esc + '0m'
 var hideCursor = esc + '?25l'
 var showCursor = esc + '?25h'
+
+// Colors
+var green  = reset + esc + '32m'   // dark green
+var red    = reset + esc + '31m'   // dark red
+var yellow = reset + esc + '33m'   // dark yellow
+var gray   = reset + esc + '30;1m' // bright black (gray)
+var white  = reset + esc + '37;1m' // bright white
+var cyan   = reset + esc + '36m'   // dark cyan
 
 // Symbols
 var passPrefix = '✔'
@@ -378,7 +378,7 @@ if (useReporter === undefined) {
 reporter = reporters[useReporter]
 if (reporter === undefined) {
   print()
-  print(red + '\'' + gray + useReporter + red + '\' is not a valid reporter.')
+  print(red + '\'' + gray + useReporter + reset + red + '\' is not a valid reporter.')
   print(red + 'Use --xct-list-reporters fot a list of supported reporters')
   print(reset)
   process.exit(1)
@@ -508,7 +508,7 @@ st.on('exit', function(code) {
     process.exit(2)
   } else if (!wasCleanExit) {
     print('\n')
-    print(red + 'ERROR: \'swift test\' exited before finishing tests with exit code \'' + white + code + red + '\'')
+    print(red + 'ERROR: \'swift test\' exited before finishing tests with exit code \'' + gray + code + red + '\'')
     print(red + 'Running \'swift test\' directly might show more information')
     printExitCode2Hint()
     write(reset)
